@@ -6,6 +6,21 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("This is a text node", TextType.BOLD)
         node2 = TextNode("This is a text node", TextType.BOLD)
         self.assertEqual(node, node2)
+    
+    def test_not_eq(self):
+        node = TextNode("This is a text node", TextType.BOLD)
+        node2 = TextNode("This is a different text node", TextType.BOLD)
+        self.assertNotEqual(node, node2)
+
+    def test_not_eq_type(self):
+        node = TextNode("This will have a different type", TextType.BOLD)
+        node2 = TextNode("his will have a different type", TextType.ITALIC)
+        self.assertNotEqual(node, node2)
+
+    def test_not_eq_url(self):
+        node = TextNode("Only one of these has a url", TextType.BOLD, "https://www.boot.dev")
+        node2 = TextNode("Only one of these has a url", TextType.BOLD)
+        self.assertNotEqual(node, node2)
 
 if __name__ == "__main__":
     unittest.main()
