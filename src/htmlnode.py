@@ -9,6 +9,8 @@ class HTMLNode:
         raise NotImplementedError()
     
     def props_to_html(self):
+        if not self.props:
+            return ""
         props_str = "".join([f' {t[0]}="{t[1]}"' for t in self.props.items()])
         return props_str
     
@@ -17,7 +19,7 @@ class HTMLNode:
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag, value, props):
+    def __init__(self, tag, value, props=None):
         super().__init__(tag, value, props=props)
 
     def to_html(self):

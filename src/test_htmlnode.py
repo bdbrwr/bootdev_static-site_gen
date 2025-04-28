@@ -1,4 +1,4 @@
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode, LeafNode
 import unittest
 
 class TestHTMLNode(unittest.TestCase):
@@ -30,6 +30,17 @@ class TestHTMLNode(unittest.TestCase):
         # Learning Note: repr uses single quotes for strings by default. There's a workaround with calling repr on the element itself, but I didn't implement this here.
 
         self.assertEqual(actual, expected)
+
+class TestLeafNode(unittest.TestCase):
+    def test_leaf_to_html_p(self):
+        node = LeafNode("p", "Hello, world!")
+        self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
+
+    def test_leaf_to_html_a(self):
+        node = LeafNode("a", "Best programming course", {"href": "https://www.bootdev.com"})
+        expected = ('<a href="https://www.bootdev.com">Best programming course</a>')
+        self.assertEqual(node.to_html(), expected)
+
 
 
 if __name__ == "__main__":
