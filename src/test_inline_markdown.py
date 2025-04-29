@@ -1,6 +1,8 @@
 import unittest
 from inline_markdown import (
     split_nodes_delimiter,
+    extract_markdown_images,
+    extract_markdown_links
 )
 
 from textnode import TextNode, TextType
@@ -122,6 +124,42 @@ class TestInlineMarkdown(unittest.TestCase):
             ],
             new_nodes,
         )
+
+    def test_extract_markdown_images(self):
+        matches = extract_markdown_images(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+        )
+        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+
+
+    def test_extract_markdown_link(self):
+        matches = extract_markdown_links(
+            "This is a text with a [link](https://www.boot.dev)"
+        )
+        self.assertListEqual([("link", "https://www.boot.dev")], matches)
+    
+
+    def test_no_link_from_img(self):
+        matches = extract_markdown_links(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+        )
+        self.assertListEqual([], matches)
+
+
+    def test_extract_markdown_multiple_link(self):
+        matches = extract_markdown_links(
+            "This is a text with a [link](https://www.boot.dev) and [instagram](instagram.com/@bootdev)"
+        )
+        self.assertListEqual([("link", "https://www.boot.dev"), ("instagram", "instagram.com/@bootdev")], matches)
+    
+    
+    def test_extraction_link_image_combined(self):
+        text = "This is a text with a [link](https://www.boot.dev) and the ![logo](favicon.png) from their [instagram](instagram.com/@bootdev)"
+        links = extract_markdown_links(text)
+        images = extract_markdown_images(text)
+        combined = links + images
+        self.assertListEqual([("link", "https://www.boot.dev"), ("instagram", "instagram.com/@bootdev"), ("logo", "favicon.png")], combined)
+
 
 
 
