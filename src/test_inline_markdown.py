@@ -86,7 +86,7 @@ class TestInlineMarkdown(unittest.TestCase):
             new_nodes,
         )
     
-    def multiple_nodes(self):
+    def test_multiple_nodes(self):
         nodes = [
             TextNode("Bold ", TextType.BOLD),
             TextNode("Text with *Italics* in there", TextType.TEXT)
@@ -97,11 +97,12 @@ class TestInlineMarkdown(unittest.TestCase):
                 TextNode("Bold ", TextType.BOLD),
                 TextNode("Text with ", TextType.TEXT),
                 TextNode("Italics", TextType.ITALIC),
-                TextNode("in there", TextType.TEXT)
-            ]
+                TextNode(" in there", TextType.TEXT)
+            ],
+            new_nodes,
         )
 
-    def even_more_multiple_nodes(self):
+    def test_even_more_multiple_nodes(self):
         nodes = [
             TextNode("Bold ", TextType.BOLD),
             TextNode("Text with *Italics* in there", TextType.TEXT),
@@ -114,11 +115,12 @@ class TestInlineMarkdown(unittest.TestCase):
                 TextNode("Bold ", TextType.BOLD),
                 TextNode("Text with ", TextType.TEXT),
                 TextNode("Italics", TextType.ITALIC),
-                TextNode("in there", TextType.TEXT),
+                TextNode(" in there", TextType.TEXT),
                 TextNode("And some code", TextType.CODE),
                 TextNode("closing with more ", TextType.TEXT),
                 TextNode("Italics", TextType.ITALIC)
-            ]
+            ],
+            new_nodes,
         )
 
 
