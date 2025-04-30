@@ -1,4 +1,5 @@
 from block_markdown import markdown_to_html_node
+import os
 
 
 def read_file(path):
@@ -16,7 +17,7 @@ def extract_title(markdown):
 
 
 def generate_page(from_path, template_path, to_path):
-    print(f"Generating page from {from_path} to {to_path} using {template_path}")
+    print(f" * Generating page from {from_path} to {to_path} using {template_path}")
 
     md = read_file(from_path)
     template = read_file(template_path)
@@ -30,3 +31,17 @@ def generate_page(from_path, template_path, to_path):
 
     with open(to_path, "w") as f:
         f.write(html)
+
+
+def generate_pages_recursive(source_dir, template_path, dest_dir):
+    if not os.path.exists(dest_dir):
+        os.mkdir(dest_dir)
+
+    for filename in os.listdir(source_dir):
+        from_path = os.path.join(source_dir, filename)
+        to_path = os.path.join(dest_dir, filename)
+        if os.path.isfile(from_path):
+            to_path = to_path.replace(".md", ".html")
+            generate_page(from_path, template_path, to_path)
+        else:
+            generate_pages_recursive(from_path, template_path, to_path)
