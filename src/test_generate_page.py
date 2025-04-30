@@ -1,7 +1,7 @@
 import unittest
-from extra_utils import *
+from generate_page import *
 
-class TestExtraUtils(unittest.TestCase):
+class generate_page(unittest.TestCase):
     def test_title_no_header(self):
         md = """
 ```
